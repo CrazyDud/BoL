@@ -1,4 +1,3 @@
-
 if myHero.charName ~= "Fizz" then return end
 
 
@@ -210,7 +209,7 @@ function FMenu()
 	FizzMenu = scriptConfig("Fizz", "Fizz")
 		FizzMenu:addParam("combokey", "Combo key(Space)", SCRIPT_PARAM_ONKEYDOWN, false, 32)
 		FizzMenu:addParam("harasskey", "Harass key(C)", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("C"))
-  		FizzMenu:addParam("escapekey", "Escape key(Z)", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("Z"))
+  	--	FizzMenu:addParam("escapekey", "Escape key(Z)", SCRIPT_PARAM_ONKEYDOWN, false, string.byte("Z"))
 		
 	FizzMenu:addTS(ts)
 		
