@@ -1,11 +1,10 @@
-
 if myHero.charName ~= "Fizz" then return end
 
 
 --[[added E usage basic coz need more skills i tried it and is op but u can du it after coz the stuff there is working]]
 
 --[[		Auto Update		]]
-local sversion = "1"
+local sversion = "1.2"
 local AUTOUPDATE = true
 local UPDATE_HOST = "raw.github.com"
 local UPDATE_PATH = "/CrazyDud/BoL/master/Crazy Fizz.lua".."?rand="..math.random(1,10000)
