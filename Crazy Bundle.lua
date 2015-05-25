@@ -292,7 +292,7 @@ function KS(enemy)
 		end
 	elseif TMenu.Misc.KSW then
 		if WREADY and getDmg("W", enemy, myHero) > enemy.health then
-			if GetDistance(enemy) <= W.range then
+			if GetDistance(enemy) <= W.range-150 then
 				CastSpell(_W, enemy.x, enemy.z)
 			end
 		end
