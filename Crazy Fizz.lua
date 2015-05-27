@@ -218,7 +218,7 @@ function FMenu()
 		FizzMenu.Combo:addParam("comboW", "Use W", SCRIPT_PARAM_ONOFF, true)
   		FizzMenu.Combo:addParam("comboE", "Use E", SCRIPT_PARAM_ONOFF, true)
 		FizzMenu.Combo:addParam("comboR", "Use R", SCRIPT_PARAM_ONOFF, true)
-		FizzMenu.Combo:addParam("Ganking", "R/Q/W/E Gank combo", SCRIPT_PARAM_ONOFF, true)
+		FizzMenu.Combo:addParam("Ganking", "W/Q/R/E Gank combo", SCRIPT_PARAM_LIST, 2, {"R/Q/W/E", "W/Q/R/E"})
         FizzMenu.Combo:addParam("Target", "Left Click target Lock", SCRIPT_PARAM_ONOFF, true)
   
 	FizzMenu:addSubMenu("Harras", "Harras")
@@ -229,10 +229,10 @@ function FMenu()
 		FizzMenu.Misc:addParam("KS", "KillSteal with Q", SCRIPT_PARAM_ONOFF, true)
 		FizzMenu.Misc:addParam("Ignite", "Use Auto Ignite", SCRIPT_PARAM_ONOFF, true)
 	    FizzMenu.Misc:addParam("Pred", "Use Hpred", SCRIPT_PARAM_ONOFF, true)
-  		FizzMenu.Misc:addParam("Pred2", "Use Vpred", SCRIPT_PARAM_ONOFF, true)
+  		FizzMenu.Misc:addParam("Pred2", "Use Vpred", SCRIPT_PARAM_ONOFF, false)
   
     FizzMenu:addSubMenu("More", "More")
-        FizzMenu.More:addParam("Zhonya", "Auto Zhonya", SCRIPT_PARAM_ONOFF, true)
+        FizzMenu.More:addParam("Zhonya", "Auto Zhonya", SCRIPT_PARAM_ONOFF, false)
         FizzMenu.More:addParam("ZhonyaHP", "Use Zhonyas at % health", SCRIPT_PARAM_SLICE, 20, 0, 100 , 0)
         FizzMenu.More:addParam("Amount", "Zhonya if x Enemies", SCRIPT_PARAM_SLICE, 1, 0, 5, 0)
         FizzMenu.More:addParam("AutoE", "Auto E dodge", SCRIPT_PARAM_ONOFF, true)
@@ -285,7 +285,27 @@ end
 
 function Combo()
 	if ValidTarget(target) then
+		if FizzMenu.Combo.Ganking == 2 then
+			if WREADY and FizzMenu.Combo.comboW and GetDistance(target) <= W.range then
+			CastSpell(_W)
+		end
+				if QREADY and FizzMenu.Combo.comboQ and GetDistance(target) <= Q.range then
+			CastSpell(_Q, target)
+		end
 		if RREADY and FizzMenu.Combo.comboR then
+			if FizzMenu.Combo.Ganking then
+               if FizzMenu.Misc.Pred then
+                 DelayAction(function() if target then HPredR(target) end end, 2.5)
+               elseif not FizzMenu.Misc.Pred then
+                  DelayAction(function() CastR() end, 1.5)
+               end
+            end
+		end
+    	if EREADY and FizzMenu.Combo.comboE and GetDistance(target) <= Q.range then
+			DelayAction(function() if target then CastSpell(_E, target.x, target.z) end end, 2.5)
+      	end
+		else
+				if RREADY and FizzMenu.Combo.comboR then
 			if FizzMenu.Combo.Ganking then
                if FizzMenu.Misc.Pred then
                   HPredR(unit)
@@ -303,6 +323,7 @@ function Combo()
     	if EREADY and FizzMenu.Combo.comboE and GetDistance(target) <= Q.range then
 			CastSpell(_E, target.x, target.z)
       	end
+		end
 	end
 end
 
@@ -318,13 +339,16 @@ function Poke()
 		else
 			if QREADY and GetDistance(target) <= Q.range then
 				lastPos = myHero.pos
+				if WREADY then
+				CastSpell(_W)
+				end
 				CastSpell(_Q, target)
 			end
 			if EREADY and GetDistance(target) <= Q.range then
 				jumpSpot = Vector(myHero) + (Vector(lastPos) - Vector(myHero)):normalized() * E.range
-				CastSpell(_E, jumpSpot.x, jumpSpot.z)
-				jumpSpot = nil
-				lastPos = nil
+				DelayAction(function() if jumpSpot then CastSpell(_E, jumpSpot.x, jumpSpot.z) end end, 1)
+				--CastSpell(_E, jumpSpot.x, jumpSpot.z)
+				DelayAction(function() jumpSpot = nil lastPos = nil end, 2)
 			end
 		end
 	end
@@ -352,7 +376,7 @@ end
 
 --------------------------------------------------------ONPROCESSSTUFF------------------------------------------
 
-function OnProcessSpell(unit, spell) 
+function OnProcessSpell(unit, spell)
 	if spell.name:lower():find("UrchinStrike") and spell.target == target then
        if RREADY and FizzMenu.Combo.comboR then
 		 if not FizzMenu.Combo.Ganking then
@@ -691,12 +715,11 @@ for i, enemy in ipairs(GetEnemyHeroes()) do
     enemy.barData = {PercentageOffset = {x = 0, y = 0} }
 end
 
-function GetEnemyHPBarPos(enemy)
+--[[function GetEnemyHPBarPos(enemy)
 
     if not enemy.barData then
         return
-    end
-
+	end
     local barPos = GetUnitHPBarPos(enemy)
     local barPosOffset = GetUnitHPBarOffset(enemy)
     local barOffset = Point(enemy.barData.PercentageOffset.x, enemy.barData.PercentageOffset.y)
@@ -715,8 +738,7 @@ function GetEnemyHPBarPos(enemy)
 
     return Point(StartPos.x, StartPos.y), Point(EndPos.x, EndPos.y)
     return Point(StartPos.x, StartPos.y), Point(EndPos.x, EndPos.y)
-
-end
+end]]
 
 function DrawIndicator(enemy)
 	local Qdmg, Wdmg, Edmg, Rdmg, AAdmg = getDmg("Q", enemy, myHero), getDmg("W", enemy, myHero), getDmg("E", enemy, myHero), getDmg("R", enemy, myHero), getDmg("AD", enemy, myHero)
