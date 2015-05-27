@@ -2,7 +2,7 @@ local Hero = {"Talon","Cassiopeia","Akali","Katarina","Kennen"}
 --Champions coming soon (maybe): Cassiopeia, Akali, Talon, [Katarina], Kennen
 
 --[[		Auto Update		]]
-local sversion = "1"
+local sversion = "1.1"
 local AUTOUPDATE = true
 local UPDATE_HOST = "raw.github.com"
 local UPDATE_PATH = "/CrazyDud/BoL/master/Crazy Bundle.lua".."?rand="..math.random(1,10000)
