@@ -4,7 +4,7 @@ if myHero.charName ~= "Fizz" then return end
 --[[added E usage basic coz need more skills i tried it and is op but u can du it after coz the stuff there is working]]
 
 --[[		Auto Update		]]
-local sversion = "1.4"
+local sversion = "1.5"
 local AUTOUPDATE = true
 local UPDATE_HOST = "raw.github.com"
 local UPDATE_PATH = "/CrazyDud/BoL/master/Crazy Fizz.lua".."?rand="..math.random(1,10000)
@@ -232,7 +232,7 @@ function FMenu()
   		FizzMenu.Misc:addParam("Pred2", "Use Vpred", SCRIPT_PARAM_ONOFF, false)
   
     FizzMenu:addSubMenu("More", "More")
-        FizzMenu.More:addParam("Zhonya", "Auto Zhonya", SCRIPT_PARAM_ONOFF, false)
+        FizzMenu.More:addParam("Zhonya", "Auto Zhonya", SCRIPT_PARAM_ONOFF, true)
         FizzMenu.More:addParam("ZhonyaHP", "Use Zhonyas at % health", SCRIPT_PARAM_SLICE, 20, 0, 100 , 0)
         FizzMenu.More:addParam("Amount", "Zhonya if x Enemies", SCRIPT_PARAM_SLICE, 1, 0, 5, 0)
         FizzMenu.More:addParam("AutoE", "Auto E dodge", SCRIPT_PARAM_ONOFF, true)
@@ -571,7 +571,7 @@ function Zhonya()
 			local Amount = FizzMenu.More.Amount
 			local health = myHero.health
 			local maxHealth = myHero.maxHealth
-				if ((health/maxHealth)*100) <= FizzMenu.More.zhonyaHP and CountEnemyHeroInRange(Range) >= Amount then
+				if ((health/maxHealth)*100) <= FizzMenu.More.ZhonyaHP and CountEnemyHeroInRange(Range) >= Amount then
 			CastSpell(Slot)
 		end
 	end
