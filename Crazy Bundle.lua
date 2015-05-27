@@ -1374,10 +1374,10 @@ function Combo()--change
 			CastSpell(_Q,target)
 			CastSpell(_E,target)
 			CastSpell(_W)
-			if RREADY then
-				CastSpell(_R)
-			end
 		end
+		if RREADY and KatarM.Combo.comboR and GetDistance(target) <= R.range-100 then
+				DelayAction(function() if target then CastSpell(_R) end end)
+			end
 	end
 end
 
@@ -1595,7 +1595,6 @@ function OnDraw()
    end
 end
 end
-
 if myHero.charName == Hero[5] then
 print (Hero[5].." script loaded.")
 --Kennen
