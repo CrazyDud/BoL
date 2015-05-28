@@ -2,7 +2,7 @@ local Hero = {"Talon","Cassiopeia","Akali","Katarina","Kennen"}
 --Champions coming soon (maybe): Cassiopeia, Akali, Talon, [Katarina], Kennen
 
 --[[		Auto Update		]]
-local sversion = "1.1"
+local sversion = "1.3"
 local AUTOUPDATE = true
 local UPDATE_HOST = "raw.github.com"
 local UPDATE_PATH = "/CrazyDud/BoL/master/Crazy Bundle.lua".."?rand="..math.random(1,10000)
@@ -283,14 +283,14 @@ function TMenu()
 end
 
 function KS(enemy)
-	if TMenu.Misc.KSEQ then
+	if TalonM.Misc.KSEQ then
 		if QREADY and EREADY and getDmg("Q", enemy, myHero) > enemy.health then
 			if GetDistance(enemy) <= E.range then
 				CastSpell(_E, target)
 				CastSpell(_Q)
 			end
 		end
-	elseif TMenu.Misc.KSW then
+	elseif TalonM.Misc.KSW then
 		if WREADY and getDmg("W", enemy, myHero) > enemy.health then
 			if GetDistance(enemy) <= W.range-150 then
 				CastSpell(_W, enemy.x, enemy.z)
