@@ -13,7 +13,7 @@ local UPDATE_URL = "https://"..UPDATE_HOST..UPDATE_PATH
 
 function AutoupdaterMsg(msg) print("<font color = \"#0066CC\">[Crazy Fizz] </font> <font color = \"#fff8e7\">"..msg.."</font>") end
 if AUTOUPDATE then
-	local ServerData = GetWebResult(UPDATE_HOST, "/CrazyDud/BoL/master/version/Crazy Fizz.version")
+	local ServerData = GetWebResult(UPDATE_HOST, "/CrazyDud/BoL/maseter/version/Crazy Fizz.version")
 	if ServerData then
 		ServerVersion = type(tonumber(ServerData)) == "number" and tonumber(ServerData) or nil
 		if ServerVersion then
